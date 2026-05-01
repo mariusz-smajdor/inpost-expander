@@ -1,0 +1,24 @@
+{
+  "name": "@inpost-expander/server",
+  "packageManager": "pnpm@10.33.1",
+  "type": "module",
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsx watch src/main.ts",
+    "lint": "eslint .",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "fastify": "^5.8.5"
+  },
+  "devDependencies": {
+    "@inpost-expander/eslint-config": "workspace:*",
+    "@inpost-expander/typescript-config": "workspace:*",
+    "@types/node": "^25.6.0",
+    "dotenv": "^17.4.2",
+    "eslint": "^9.39.4",
+    "globals": "^17.5.0",
+    "tsx": "^4.21.0",
+    "typescript": "^6.0.3"
+  }
+}

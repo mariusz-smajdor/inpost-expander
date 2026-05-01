@@ -1,0 +1,17 @@
+{
+  "extends": "@inpost-expander/typescript-config/base-config",
+  "compilerOptions": {
+    "paths": {
+      "@/*": ["./src/*"]
+    },
+    "target": "esnext",
+    "module": "nodenext",
+    "types": ["node"],
+    "sourceMap": true,
+    "declaration": true,
+    "declarationMap": true,
+
+    /* Bundler mode */
+    "isolatedModules": true
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "name": "@inpost-expander/typescript-config",
+  "packageManager": "pnpm@10.33.1",
+  "exports": {
+    "./base-config": "./tsconfig.json"
+  }
+}
