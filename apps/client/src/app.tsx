@@ -1,3 +1,9 @@
+import ExpanderMap from '@/components/expander-map';
+
 export default function App() {
-  return <h1>Inpost Expander</h1>;
+  return (
+    <main className='h-dvh overflow-hidden'>
+      <ExpanderMap />
+    </main>
+  );
 }
