@@ -1,11 +1,14 @@
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 
+import { CountryProvider } from '@/features/country/provider';
 import App from '@/app.tsx';
 import '@/main.css';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <App />
+    <CountryProvider>
+      <App />
+    </CountryProvider>
   </StrictMode>
 );
