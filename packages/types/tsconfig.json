@@ -1,0 +1,4 @@
+{
+  "extends": "@inpost-expander/typescript-config/base-config",
+  "include": ["src/**/*"]
+}

@@ -12,6 +12,7 @@
     "@fontsource-variable/jetbrains-mono": "^5.2.8",
     "@fontsource-variable/montserrat": "5.2.8",
     "@tailwindcss/vite": "^4.2.1",
+    "axios": "^1.16.0",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "lucide-react": "^1.14.0",
@@ -28,6 +29,7 @@
   "devDependencies": {
     "@eslint/js": "^9.39.4",
     "@inpost-expander/eslint-config": "workspace:*",
+    "@inpost-expander/types": "workspace:*",
     "@inpost-expander/typescript-config": "workspace:*",
     "@types/node": "^24.12.0",
     "@types/react": "^19.2.14",

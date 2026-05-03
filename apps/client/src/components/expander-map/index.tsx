@@ -1,4 +1,4 @@
-import { useRef, useEffect } from 'react';
+import { useRef, useEffect, useCallback } from 'react';
 import { Map, type MapRef } from 'react-map-gl/maplibre';
 
 import Header from '@/components/header';
@@ -8,10 +8,20 @@ import {
   COUNTRY_MAP_ZOOM,
   WARSAW_VIEW_STATE,
 } from './constants';
+import { useLockers } from './hooks/use-lockers';
+import LockerMarker from './components/locker-marker';
 
 export default function ExpanderMap() {
   const mapRef = useRef<MapRef | null>(null);
+
   const { country } = useCountry();
+  const { lockers, fetchLockers } = useLockers();
+
+  useEffect(() => {
+    if (mapRef.current) {
+      mapRef.current.resize();
+    }
+  }, []);
 
   useEffect(() => {
     if (country && mapRef.current) {
@@ -23,6 +33,13 @@ export default function ExpanderMap() {
     }
   }, [country]);
 
+  const fetchMapData = useCallback(() => {
+    const map = mapRef.current?.getMap();
+    if (!map) return;
+
+    fetchLockers(map);
+  }, [fetchLockers]);
+
   return (
     <>
       <Header />
@@ -31,7 +48,13 @@ export default function ExpanderMap() {
         initialViewState={WARSAW_VIEW_STATE}
         maxBounds={EUROPE_MAP_BOUNDS}
         mapStyle='https://basemaps.cartocdn.com/gl/dark-matter-gl-style/style.json'
-      ></Map>
+        onLoad={fetchMapData}
+        onMoveEnd={fetchMapData}
+      >
+        {lockers.map((locker) => (
+          <LockerMarker key={locker.id} locker={locker} />
+        ))}
+      </Map>
     </>
   );
 }
