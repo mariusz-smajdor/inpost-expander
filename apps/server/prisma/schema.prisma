@@ -1,0 +1,28 @@
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["postgresqlExtensions"]
+}
+
+datasource db {
+  provider   = "postgresql"
+  extensions = [postgis]
+}
+
+model Locker {
+  id                  String   @id @map("name")
+  latitude            Float
+  longitude           Float
+  city                String
+  street              String
+  buildingNumber      String?  @map("building_number")
+  postCode            String   @map("post_code")
+  status              String
+  type                String
+  imageUrl            String?  @map("image_url")
+  locationDescription String?  @map("location_description")
+  updatedAt           DateTime @updatedAt @map("updated_at")
+
+  location Unsupported("geography(Point, 4326)")?
+
+  @@index([location], name: "location_idx", type: Gist)
+}
