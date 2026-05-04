@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect, useCallback } from 'react';
 import { Map, type MapRef } from 'react-map-gl/maplibre';
-import type { Cluster, Locker } from '@inpost-expander/types';
+import type { Cluster, Expander, Locker } from '@inpost-expander/types';
 
 import { useCountry } from '@/features/country/use-country';
 
@@ -16,9 +16,13 @@ import {
   COUNTRY_MAP_ZOOM,
   WARSAW_VIEW_STATE,
 } from './constants';
+import ExpanderPopup from './components/expander-popup';
 
 export default function ExpanderMap() {
   const [selectedLocker, setSelectedLocker] = useState<Locker | null>(null);
+  const [selectedExpander, setSelectedExpander] = useState<Expander | null>(
+    null
+  );
   const mapRef = useRef<MapRef | null>(null);
 
   const { country } = useCountry();
@@ -35,6 +39,8 @@ export default function ExpanderMap() {
         essential: true,
       });
     }
+    setSelectedLocker(null);
+    setSelectedExpander(null);
   }, [country]);
 
   const handleClusterClick = useCallback(
@@ -99,9 +105,17 @@ export default function ExpanderMap() {
           <ExpanderMarker
             key={String(expander.latitude) + String(expander.longitude)}
             expander={expander}
+            onExpanderClick={(expander) => setSelectedExpander(expander)}
           />
         ))}
+        {selectedExpander && (
+          <ExpanderPopup
+            expander={selectedExpander}
+            onPopupClose={() => setSelectedExpander(null)}
+          />
+        )}
       </Map>
+
       {isPoint ? (
         <ExpandersButton
           loading={loading}

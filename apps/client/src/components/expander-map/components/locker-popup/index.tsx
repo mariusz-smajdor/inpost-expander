@@ -13,8 +13,9 @@ import {
 } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
+import { checkLocationInStreetView } from '@/utils/streetview';
 import { POPUP_OFFSETS } from './constants';
-import './styles.css';
+import '../../styles.css';
 
 interface LockerPopupProps {
   locker: Locker;
@@ -25,11 +26,6 @@ export default function LockerPopup({
   locker,
   onPopupClose,
 }: LockerPopupProps) {
-  const checkLockerInStreetView = () => {
-    const url = `https://www.google.com/maps/@?api=1&map_action=pano&viewpoint=${locker.latitude},${locker.longitude}`;
-    window.open(url, '_blank');
-  };
-
   return (
     <Popup
       longitude={locker.longitude}
@@ -38,7 +34,7 @@ export default function LockerPopup({
       offset={POPUP_OFFSETS}
       className='custom-popup'
     >
-      <Card className='bg-background/25 relative mx-auto w-full max-w-md rounded-lg pt-0 backdrop-blur-md'>
+      <Card className='bg-background/25 w-full rounded-lg pt-0 backdrop-blur-md'>
         <div className='absolute inset-0 z-30 aspect-video' />
         <img
           src={locker.imageUrl!}
@@ -78,7 +74,12 @@ export default function LockerPopup({
           </CardDescription>
         </CardHeader>
         <CardFooter>
-          <Button className='w-full rounded' onClick={checkLockerInStreetView}>
+          <Button
+            className='w-full rounded'
+            onClick={() =>
+              checkLocationInStreetView(locker.latitude, locker.longitude)
+            }
+          >
             Check in Street View
           </Button>
         </CardFooter>

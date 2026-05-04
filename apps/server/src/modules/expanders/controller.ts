@@ -11,7 +11,6 @@ export const getExpanderSuggestionsHandler = async (
   const { west, south, east, north } = request.query;
 
   try {
-    // 1. Generujemy zapytanie
     const osmQuery = await expandersRepository.getOsmQuery(
       west,
       south,
@@ -19,25 +18,20 @@ export const getExpanderSuggestionsHandler = async (
       north
     );
 
-    // 2. Przygotowujemy parametry (format x-www-form-urlencoded)
     const params = new URLSearchParams();
     params.append('data', osmQuery);
 
-    // 3. Wywołanie Axios
     const response = await axios.post(
       'https://overpass-api.de/api/interpreter',
       params,
       {
         headers: {
           'User-Agent': 'InPost-Expander-App/1.0',
-          // Axios sam ustawi Content-Type na 'application/x-www-form-urlencoded'
-          // przy przekazaniu URLSearchParams, ale dla pewności możemy go zostawić:
           'Content-Type': 'application/x-www-form-urlencoded',
         },
       }
     );
 
-    // Axios przechowuje przeliczony JSON w polu .data
     const osmData = response.data;
 
     const buildings = osmData.elements.map((el: any) => ({
@@ -45,7 +39,6 @@ export const getExpanderSuggestionsHandler = async (
       lon: el.center?.lon || el.lon,
     }));
 
-    // 4. Zapis do bazy i pobranie sugestii
     await expandersRepository.saveBuildings(buildings);
     const suggestions = await expandersRepository.getExpanders(
       west,
@@ -56,7 +49,6 @@ export const getExpanderSuggestionsHandler = async (
 
     return suggestions;
   } catch (error) {
-    // Axios ma bardzo szczegółowe błędy (np. error.response.data)
     if (axios.isAxiosError(error)) {
       request.log.error(error.response?.data || error.message);
     } else {

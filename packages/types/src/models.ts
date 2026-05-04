@@ -30,6 +30,8 @@ export type ExpanderType = 'suggestion';
 export interface Expander {
   longitude: number;
   latitude: number;
-  type: ExpanderType;
+  type: 'suggestion';
   distanceToNearest: number;
+  buildingDensity: number;
+  score: number;
 }
