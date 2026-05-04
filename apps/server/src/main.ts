@@ -2,6 +2,7 @@ import Fastify from 'fastify';
 import cors from '@fastify/cors';
 
 import { lockerRoutes } from '@/modules/lockers/routes.js';
+import { expanderRoutes } from '@/modules/expanders/routes.js';
 
 const fastify = Fastify({
   logger: true,
@@ -11,6 +12,7 @@ await fastify.register(cors, {
   origin: true,
 });
 fastify.register(lockerRoutes);
+fastify.register(expanderRoutes);
 
 const start = async () => {
   try {

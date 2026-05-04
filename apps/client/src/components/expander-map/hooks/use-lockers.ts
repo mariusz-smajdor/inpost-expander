@@ -4,7 +4,7 @@ import type { Locker, Cluster } from '@inpost-expander/types';
 
 type MapResponse = Locker[] | Cluster[];
 
-export const useLockers = () => {
+export function useLockers() {
   const [lockers, setLockers] = useState<MapResponse>([]);
 
   const fetchLockers = useCallback(async (map: maplibregl.Map) => {
@@ -29,4 +29,4 @@ export const useLockers = () => {
   }, []);
 
   return { lockers, fetchLockers };
-};
+}

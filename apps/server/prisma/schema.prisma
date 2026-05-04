@@ -26,3 +26,12 @@ model Locker {
 
   @@index([location], name: "location_idx", type: Gist)
 }
+
+model BuildingOSM {
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+
+  location Unsupported("geography(Point, 4326)")
+
+  @@index([location], type: Gist)
+}

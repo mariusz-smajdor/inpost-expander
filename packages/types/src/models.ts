@@ -24,3 +24,12 @@ export interface Locker extends MapPoint {
   locationDescription: string | null;
   imageUrl: string | null;
 }
+
+export type ExpanderType = 'suggestion';
+
+export interface Expander {
+  longitude: number;
+  latitude: number;
+  type: ExpanderType;
+  distanceToNearest: number;
+}

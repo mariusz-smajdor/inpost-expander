@@ -126,6 +126,9 @@ importers:
       '@prisma/client':
         specifier: ^7.8.0
         version: 7.8.0(prisma@7.8.0(@types/react-dom@19.2.3(@types/react@19.2.14))(@types/react@19.2.14)(react-dom@19.2.5(react@19.2.5))(react@19.2.5)(typescript@6.0.3))(typescript@6.0.3)
+      axios:
+        specifier: ^1.16.0
+        version: 1.16.0
       fastify:
         specifier: ^5.8.5
         version: 5.8.5

@@ -65,7 +65,7 @@ export default function LockerPopup({
               {locker.id}
             </span>
             <span className='text-muted-foreground text-[10px] font-bold uppercase'>
-              {locker.pointType === 'locker' ? 'Paczkomat' : 'Punkt POP'}
+              {locker.pointType === 'locker' ? 'Locker' : 'Pickup Point'}
             </span>
           </CardTitle>
 

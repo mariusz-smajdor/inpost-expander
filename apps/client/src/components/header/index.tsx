@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 
 import { useCountry } from '@/features/country/use-country';
-import { fetchCountrues } from '@/features/country/service';
+import { fetchCountries } from '@/features/country/service';
 import type { Country, CountryCode } from '@/features/country/types';
 import { Separator } from '@/components/ui/separator';
 import {
@@ -25,7 +25,7 @@ export default function Header() {
   };
 
   useEffect(() => {
-    fetchCountrues()
+    fetchCountries()
       .then(setCountries)
       .catch((error) => {
         console.error('Error fetching countries:', error);
