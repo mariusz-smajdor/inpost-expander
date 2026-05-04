@@ -13,6 +13,7 @@
   },
   "devDependencies": {
     "@inpost-expander/eslint-config": "workspace:*",
-    "@inpost-expander/typescript-config": "workspace:*"
+    "@inpost-expander/typescript-config": "workspace:*",
+    "eslint": "^9.39.4"
   }
 }

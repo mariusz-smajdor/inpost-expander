@@ -1,8 +1,9 @@
-import { useRef, useEffect, useCallback } from 'react';
+import { useState, useRef, useEffect, useCallback } from 'react';
 import { Map, type MapRef } from 'react-map-gl/maplibre';
+import type { Cluster, Locker } from '@inpost-expander/types';
 
 import Header from '@/components/header';
-import { useCountry } from '@/features/country/provider';
+import { useCountry } from '@/features/country/use-country';
 import {
   EUROPE_MAP_BOUNDS,
   COUNTRY_MAP_ZOOM,
@@ -10,18 +11,14 @@ import {
 } from './constants';
 import { useLockers } from './hooks/use-lockers';
 import LockerMarker from './components/locker-marker';
+import LockerPopup from './components/locker-popup';
 
 export default function ExpanderMap() {
+  const [selectedLocker, setSelectedLocker] = useState<Locker | null>(null);
   const mapRef = useRef<MapRef | null>(null);
 
   const { country } = useCountry();
   const { lockers, fetchLockers } = useLockers();
-
-  useEffect(() => {
-    if (mapRef.current) {
-      mapRef.current.resize();
-    }
-  }, []);
 
   useEffect(() => {
     if (country && mapRef.current) {
@@ -32,6 +29,20 @@ export default function ExpanderMap() {
       });
     }
   }, [country]);
+
+  const handleClusterClick = (cluster: Cluster) => {
+    if (!mapRef.current) return;
+
+    if (cluster.west && cluster.south && cluster.east && cluster.north) {
+      mapRef.current.fitBounds(
+        [
+          [cluster.west, cluster.south],
+          [cluster.east, cluster.north],
+        ],
+        { padding: 100, duration: 1000, essential: true }
+      );
+    }
+  };
 
   const fetchMapData = useCallback(() => {
     const map = mapRef.current?.getMap();
@@ -48,12 +59,24 @@ export default function ExpanderMap() {
         initialViewState={WARSAW_VIEW_STATE}
         maxBounds={EUROPE_MAP_BOUNDS}
         mapStyle='https://basemaps.cartocdn.com/gl/dark-matter-gl-style/style.json'
+        attributionControl={false}
         onLoad={fetchMapData}
         onMoveEnd={fetchMapData}
       >
-        {lockers.map((locker) => (
-          <LockerMarker key={locker.id} locker={locker} />
+        {lockers.map((item) => (
+          <LockerMarker
+            key={item.id}
+            marker={item}
+            onClusterClick={handleClusterClick}
+            onLockerClick={(locker) => setSelectedLocker(locker)}
+          />
         ))}
+        {selectedLocker ? (
+          <LockerPopup
+            locker={selectedLocker}
+            onPopupClose={() => setSelectedLocker(null)}
+          />
+        ) : null}
       </Map>
     </>
   );

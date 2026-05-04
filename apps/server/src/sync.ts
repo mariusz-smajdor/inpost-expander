@@ -50,11 +50,11 @@ async function runSync() {
         })
       );
 
-      await prisma.$executeRawUnsafe(`
+      await prisma.$executeRaw`
         UPDATE "Locker" 
         SET location = ST_SetSRID(ST_MakePoint(longitude, latitude), 4326)::geography
         WHERE location IS NULL;
-      `);
+      `;
 
       page++;
     } while (page <= totalPages);

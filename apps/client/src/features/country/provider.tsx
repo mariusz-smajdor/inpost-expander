@@ -1,13 +1,7 @@
-import { useState, useContext, createContext, type ReactNode } from 'react';
+import { useState, type ReactNode } from 'react';
 
+import { CountryContext } from './country-context';
 import type { Country } from './types';
-
-type CountryContextType = {
-  country: Country | null;
-  setCountry: (country: Country | null) => void;
-};
-
-const CountryContext = createContext<CountryContextType | null>(null);
 
 export function CountryProvider({ children }: { children: ReactNode }) {
   const [country, setCountry] = useState<Country | null>(null);
@@ -17,14 +11,4 @@ export function CountryProvider({ children }: { children: ReactNode }) {
       {children}
     </CountryContext.Provider>
   );
-}
-
-export function useCountry() {
-  const context = useContext(CountryContext);
-
-  if (!context) {
-    throw new Error('useCountry must be used within a CountryProvider');
-  }
-
-  return context;
 }

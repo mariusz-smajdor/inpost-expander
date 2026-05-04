@@ -184,6 +184,9 @@ importers:
       '@inpost-expander/typescript-config':
         specifier: workspace:*
         version: link:../typescript-config
+      eslint:
+        specifier: ^9.39.4
+        version: 9.39.4(jiti@2.6.1)
 
   packages/typescript-config: {}
 

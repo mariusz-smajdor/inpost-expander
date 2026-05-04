@@ -1,0 +1,25 @@
+.custom-popup .maplibregl-popup-content {
+  background: unset !important;
+  box-shadow: unset !important;
+  padding: 0 !important;
+}
+
+.custom-popup .maplibregl-popup-close-button {
+  display: none;
+}
+
+.maplibregl-popup-anchor-bottom .maplibregl-popup-tip {
+  border-top-color: var(--color-primary) !important;
+}
+
+.maplibregl-popup-anchor-top .maplibregl-popup-tip {
+  border-bottom-color: var(--color-primary) !important;
+}
+
+.maplibregl-popup-anchor-left .maplibregl-popup-tip {
+  border-right-color: var(--color-primary) !important;
+}
+
+.maplibregl-popup-anchor-right .maplibregl-popup-tip {
+  border-left-color: var(--color-primary) !important;
+}
