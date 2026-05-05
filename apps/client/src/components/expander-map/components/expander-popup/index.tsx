@@ -78,7 +78,7 @@ export default function ExpanderPopup({
               {rank.label}
             </Badge>
           </CardAction>
-          <CardTitle className='flex flex-col font-mono leading-tight tracking-tighter'>
+          <CardTitle className='flex flex-col font-mono leading-0 tracking-tighter'>
             <span className='text-primary text-lg font-black uppercase'>
               Suggested Point
             </span>
@@ -88,26 +88,26 @@ export default function ExpanderPopup({
           </CardTitle>
         </CardHeader>
 
-        <CardContent className='mt-4 flex w-full flex-col gap-3'>
-          <div className='flex gap-2 text-xs font-medium'>
+        <CardContent className='flex w-full flex-col gap-3'>
+          <div className='flex gap-2 text-xs'>
             <Building2 className='text-primary h-4 w-4 shrink-0' />
             <span>
-              Gęstość: <strong>{buildingDensity}</strong> budynków / 300m
+              Density: <strong>{buildingDensity}</strong> buildings / 300m
             </span>
           </div>
 
-          <div className='flex gap-2 text-xs font-medium'>
+          <div className='flex gap-2 text-xs'>
             <MapPin className='text-primary h-4 w-4 shrink-0' />
             <span>
-              Konkurencja: <strong>{Math.round(distanceToNearest)}m</strong> do
-              bazy
+              Competition: <strong>{Math.round(distanceToNearest)}m</strong> to
+              the nearest locker/pickup point
             </span>
           </div>
 
           <div>
             <div className='flex items-center justify-between'>
-              <span className='text-muted-foreground text-xs font-bold'>
-                Rekomendacja ekspansji
+              <span className='text-muted-foreground text-xs font-medium'>
+                Expansion Recommendation
               </span>
               <span className='text-primary font-mono text-sm'>
                 {percentage}%

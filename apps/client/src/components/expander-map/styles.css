@@ -2,6 +2,7 @@
   background: unset !important;
   box-shadow: unset !important;
   padding: 0 !important;
+  font-family: var(--font-sans) !important;
 }
 
 .custom-popup .maplibregl-popup-close-button {

@@ -25,12 +25,9 @@ export interface Locker extends MapPoint {
   imageUrl: string | null;
 }
 
-export type ExpanderType = 'suggestion';
-
 export interface Expander {
   longitude: number;
   latitude: number;
-  type: 'suggestion';
   distanceToNearest: number;
   buildingDensity: number;
   score: number;

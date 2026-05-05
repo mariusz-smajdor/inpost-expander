@@ -1,6 +1,8 @@
-import axios from 'axios';
 import type { FastifyReply, FastifyRequest } from 'fastify';
+import axios from 'axios';
+
 import { expandersRepository } from './repository.js';
+import type { BuildingLocation, OSMElement } from '@/types/osm-api.js';
 
 export const getExpanderSuggestionsHandler = async (
   request: FastifyRequest<{
@@ -34,10 +36,21 @@ export const getExpanderSuggestionsHandler = async (
 
     const osmData = response.data;
 
-    const buildings = osmData.elements.map((el: any) => ({
-      lat: el.center?.lat || el.lat,
-      lon: el.center?.lon || el.lon,
-    }));
+    const buildings: BuildingLocation[] = osmData.elements.map(
+      (el: OSMElement) => {
+        const lat = el.center?.lat ?? el.lat;
+        const lon = el.center?.lon ?? el.lon;
+
+        if (lat === undefined || lon === undefined) {
+          throw new Error(`Element OSM ${el.id} nie posiada współrzędnych`);
+        }
+
+        return {
+          lat,
+          lon,
+        };
+      }
+    );
 
     await expandersRepository.saveBuildings(buildings);
     const suggestions = await expandersRepository.getExpanders(

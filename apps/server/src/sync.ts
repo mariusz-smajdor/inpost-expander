@@ -2,7 +2,7 @@ import 'dotenv/config';
 import { Prisma } from '@prisma/client';
 
 import { prisma } from '@/lib/prisma.js';
-import type { InPostApiResponse, InPostPoint } from '@/types/api.js';
+import type { InPostApiResponse, InPostPoint } from '@/types/inpost-api.js';
 
 async function runSync() {
   const perPage = 100;

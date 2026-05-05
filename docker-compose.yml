@@ -3,7 +3,7 @@ services:
     image: postgis/postgis:15-3.3
     container_name: inpost-expander
     ports:
-      - '5432:5432'
+      - '${POSTGRES_PORT}:${POSTGRES_PORT}'
     environment:
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
