@@ -6,12 +6,16 @@
     },
     "target": "esnext",
     "module": "nodenext",
+    "moduleResolution": "NodeNext",
     "types": ["node"],
+    "outDir": "./dist",
+    "rootDir": "./src",
     "sourceMap": true,
     "declaration": true,
     "declarationMap": true,
 
     /* Bundler mode */
     "isolatedModules": true
-  }
+  },
+  "include": ["src/**/*"]
 }

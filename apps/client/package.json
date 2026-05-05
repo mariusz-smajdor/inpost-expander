@@ -3,6 +3,7 @@
   "packageManager": "pnpm@10.33.1",
   "type": "module",
   "scripts": {
+    "start": "vite preview",
     "build": "tsc -b && vite build",
     "dev": "vite",
     "lint": "eslint .",
