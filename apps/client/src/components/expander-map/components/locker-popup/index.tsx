@@ -35,12 +35,20 @@ export default function LockerPopup({
       className='custom-popup'
     >
       <Card className='bg-background/25 w-full rounded-lg pt-0 backdrop-blur-md'>
-        <div className='absolute inset-0 z-30 aspect-video' />
-        <img
-          src={locker.imageUrl!}
-          alt={locker.id}
-          className='relative z-20 aspect-video w-full object-cover'
-        />
+        {locker.imageUrl ? (
+          <div className='relative aspect-video w-full'>
+            <div className='absolute inset-0 z-30' />
+            <img
+              src={locker.imageUrl}
+              alt={locker.id}
+              className='relative z-20 aspect-video w-full object-cover'
+            />
+          </div>
+        ) : (
+          <div className='bg-muted flex aspect-video w-full items-center justify-center'>
+            <MapPin className='text-muted-foreground h-10 w-10 opacity-20' />
+          </div>
+        )}
         <CardHeader>
           <CardAction>
             <Badge
