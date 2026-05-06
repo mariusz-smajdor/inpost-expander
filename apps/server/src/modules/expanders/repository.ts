@@ -1,3 +1,4 @@
+import { Prisma } from '@prisma/client';
 import { prisma } from '@/lib/prisma.js';
 import type { Expander } from '@inpost-expander/types';
 
@@ -16,17 +17,21 @@ export const expandersRepository = {
     await prisma.$executeRawUnsafe(`TRUNCATE TABLE "BuildingOSM"`);
 
     if (buildings.length === 0) return;
-
-    const values = buildings
-      .map(
+    console.log('TERAZ BEZPIECZNIEJ');
+    try {
+      const values = buildings.map(
         (b) =>
-          `(gen_random_uuid(), ST_SetSRID(ST_MakePoint(${b.lon}, ${b.lat}), 4326)::geography)`
-      )
-      .join(',');
+          Prisma.sql`(gen_random_uuid(), ST_SetSRID(ST_MakePoint(${b.lon}, ${b.lat}), 4326)::geography)`
+      );
 
-    await prisma.$executeRawUnsafe(`
-    INSERT INTO "BuildingOSM" ("id", "location") VALUES ${values}
-  `);
+      await prisma.$executeRaw`
+      INSERT INTO "BuildingOSM" ("id", "location") 
+      VALUES ${Prisma.join(values)}
+    `;
+    } catch (error) {
+      console.error('Błąd zapisu budynków:', error);
+      throw error;
+    }
   },
 
   async getExpanders(west: number, south: number, east: number, north: number) {
