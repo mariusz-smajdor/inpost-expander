@@ -14,23 +14,26 @@ export const expandersRepository = {
   },
 
   async saveBuildings(buildings: { lat: number; lon: number }[]) {
-    await prisma.$executeRawUnsafe(`TRUNCATE TABLE "BuildingOSM"`);
-
     if (buildings.length === 0) return;
-    console.log('TERAZ BEZPIECZNIEJ');
-    try {
-      const values = buildings.map(
-        (b) =>
-          Prisma.sql`(gen_random_uuid(), ST_SetSRID(ST_MakePoint(${b.lon}, ${b.lat}), 4326)::geography)`
-      );
 
-      await prisma.$executeRaw`
-      INSERT INTO "BuildingOSM" ("id", "location") 
-      VALUES ${Prisma.join(values)}
-    `;
+    const values = buildings.map(
+      (b) =>
+        Prisma.sql`(gen_random_uuid(), ST_SetSRID(ST_MakePoint(${b.lon}, ${b.lat}), 4326)::geography)`
+    );
+
+    try {
+      await prisma.$transaction(async (tx) => {
+        await tx.$executeRawUnsafe(`TRUNCATE TABLE "BuildingOSM"`);
+
+        await tx.$executeRaw`
+          INSERT INTO "BuildingOSM" ("id", "location") 
+          VALUES ${Prisma.join(values)}
+        `;
+      });
     } catch (error) {
-      console.error('Błąd zapisu budynków:', error);
-      throw error;
+      throw new Error(
+        'Failed to update building data. Previous data preserved.'
+      );
     }
   },
 
