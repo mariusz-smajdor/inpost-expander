@@ -1,8 +1,27 @@
 import type { FastifyReply, FastifyRequest } from 'fastify';
 import axios from 'axios';
+import axiosRetry from 'axios-retry';
 
 import { expandersRepository } from './repository.js';
 import type { BuildingLocation, OSMElement } from '@/types/osm-api.js';
+
+const overpassClient = axios.create();
+
+axiosRetry(overpassClient, {
+  retries: 3,
+  retryDelay: axiosRetry.exponentialDelay,
+  retryCondition: (error) => {
+    return (
+      axiosRetry.isNetworkOrIdempotentRequestError(error) ||
+      error.response?.status === 429
+    );
+  },
+  onRetry: (retryCount, error) => {
+    console.warn(
+      `Retry attempt #${retryCount} for Overpass API due to: ${error.message}`
+    );
+  },
+});
 
 export const getExpanderSuggestionsHandler = async (
   request: FastifyRequest<{
@@ -23,7 +42,7 @@ export const getExpanderSuggestionsHandler = async (
     const params = new URLSearchParams();
     params.append('data', osmQuery);
 
-    const response = await axios.post(
+    const response = await overpassClient.post(
       'https://overpass-api.de/api/interpreter',
       params,
       {
@@ -68,6 +87,8 @@ export const getExpanderSuggestionsHandler = async (
       request.log.error(error);
     }
 
-    return reply.status(500).send({ error: 'BI Engine Error' });
+    return reply
+      .status(500)
+      .send({ error: 'BI Engine Error: Failed to sync with OSM' });
   }
 };
