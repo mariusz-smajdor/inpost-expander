@@ -125,11 +125,7 @@ To better demonstrate the system's capabilities, I have prepared several scenari
 
 ![White Spots](./docs/screenshots/white-spots.png)
 
-Simply click on one of the yellow pulsating expander dots to reveal the expander popup.
-
-![Expander Popup](./docs/screenshots/expander-popup.png)
-
-2. **Street View Verification:** Integrated Google Street View allows you to verify if there is physical space for a locker at the suggested spot with one click.
+2. **Street View Verification:** Integrated Google Street View allows you to verify if there is physical space for a locker at the suggested spot with one click. Simply click on one of the yellow pulsating expander dots to reveal the expander popup.
 
 ![Street View](./docs/screenshots/street-view-button.png)
 
