@@ -5,6 +5,9 @@ import { lockerRoutes } from '@/modules/lockers/routes.js';
 import { expanderRoutes } from '@/modules/expanders/routes.js';
 
 const fastify = Fastify({
+  // For convenience in this recruitment project, I set origin to true.
+  // In a production scenario, I would use an environment variable (e.g., process.env.ALLOWED_ORIGINS)
+  // to whitelist specific URLs and toggle them based on whether the project runs in Dev or Prod mode.
   logger: true,
 });
 
