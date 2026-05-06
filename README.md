@@ -35,7 +35,13 @@ pnpm --filter server db:push  # Syncs Prisma schema with the database
 
 ```bash
 pnpm --filter server db:generate
-pnpm --filter server db:sync
+pnpm --filter server db:sync      # this in one time sync, it takes some time but we won'e have to do it even again (unless we drop the database)
+```
+
+You can verify the sync by checking the "Locker" table in Prisma Studio:
+
+```bash
+pnpm --filter server prisma studio
 ```
 
 ## 🏃‍♂️ Running the project
@@ -58,7 +64,10 @@ pnpm start
 
 ## 🔄 Data Synchronization & Architecture Strategy
 
-One of the core architectural decisions in this project was to implement a dedicated data synchronization layer between InPost's public API and my local spatial database.
+One of the core architectural decisions in this project was to implement a dedicated data synchronization layer between InPost's public API and my local spatial database. This is a one-time synchronization that fetches the entire parcel locker network from the official InPost API.
+Once completed, the data remains in your database. You won't have to run this again unless you manually drop the database or clear the Locker table.
+
+**TIP:** Open a second terminal and run `pnpm dev` while syncing. You can start working with the data immediately as it's being populated. Just a heads-up: the process usually starts with points in Western Europe and moves across the map from there.
 
 ### How it works:
 
@@ -110,10 +119,14 @@ To better demonstrate the system's capabilities, I have prepared several scenari
 
 ![White Spots](./docs/screenshots/white-spots.png)
 
+Simply click on one of the yellow pulsating expander dots to reveal the expander popup.
+
+![Expander Popup](./docs/screenshots/expander-popup.png)
+
 2. **Street View Verification:** Integrated Google Street View allows you to verify if there is physical space for a locker at the suggested spot with one click.
 
-![Street View](./docs/screenshots/street-view.png)
+![Street View](./docs/screenshots/street-view-button.png)
 
-## A note
+## A small note
 
 I treat this project as an MVP. Given more time, I would implement pedestrian traffic density analysis and integrate data from competitor locker networks. I would be happy to discuss these ideas further during our interview!
