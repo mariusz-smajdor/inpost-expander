@@ -14,6 +14,12 @@ I built this application as a **Turbo Monorepo**, combining the speed of **Vite 
 
 - Docker (To quickly spin up the database)
 
+### Clone the repository:
+
+```bash
+git clone https://github.com/mariusz-smajdor/inpost-expander.git
+```
+
 ### Initial Setup
 
 #### Environment Variables:
